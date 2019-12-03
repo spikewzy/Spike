@@ -1,0 +1,72 @@
+---
+title: "3618 Project3"
+author: "Spike Wang & Xiaoli Zhu"
+date: "2019/12/2"
+output: html_document
+---
+
+```{r}
+n=10
+t=n*2
+C=10000
+r=0.06
+i=0.04
+coupon_size=C*r/2
+BV=coupon_size*((1-(1/(((1+i/2)))^(n*2))))/((i/2))+C*((1/(1+i/2))^(n*2)) # calculate Book Value at time 1   
+
+
+row1 <- c(0,0,0,BV) # set the first row
+amount <- matrix(0, 1 + t, 4)  # pre-allocation 
+amount[1,] <- row1
+
+#given loop for t times and Compute values and place then in the matrix.
+for (time in 1:t) {
+  coupon_size
+  I = BV*i/2
+  
+  A = coupon_size-I
+  
+  
+  BV = BV-A
+  amount[time+1,]<-c(coupon_size,I,A,BV)
+}
+
+
+
+
+# Display the results.
+rownames(amount) <- c("Duration", 1:t)
+colnames(amount) <- c("Coupon","Interest","Amort. of Premium/Discount","Book Value")
+print(amount)
+
+```
+
+```{r}
+amount[1] <- t
+for (time in 1:n) {amount[time+1] <- amount[time]+1}
+print(amount)
+Duration <- amount
+```
+
+```{r}
+amount[1] <- payment_size-loan*monthly_rate
+for (time in 2:num) {amount[time ] <- payment_size*(1/(1+monthly_rate))^(num-time+1)}
+print(amount)
+principal_paid <- amount
+```
+
+```{r}
+amount[1] <- loan
+for (time in 1:num) {amount[time + 1] <- amount[time]-principal_paid[time ]}
+print(amount)
+outstanding_balance <- amount
+```
+
+```{r}
+x <- c(Duration, coupon_size, Amount_for_Amort._of_ Discount, Book_Value)
+rownames <- c(0,1:num)
+colnames <- c("interest paid", "principal repaid", "outstanding balance")
+dimnames = list(rownames, colnames)
+amortization <- matrix(x, nrow = 121, ncol = 3, dimnames=dimnames)
+amortization
+```
